@@ -162,7 +162,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }, this)
 	      .join('');
 	
-	    return (
+	    return this.transferPropsTo(
 	      React.DOM.div(null, 
 	        React.DOM.div({id: "disqus_thread"}), 
 	        React.DOM.script({dangerouslySetInnerHTML: {__html: disqusVars}}), 
