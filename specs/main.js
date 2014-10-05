@@ -1,0 +1,1 @@
+require('./disqus-thread.spec.js');

@@ -1,0 +1,28 @@
+{
+  "name": "react-disqus-thread",
+  "version": "0.0.0",
+  "homepage": "https://github.com/mzabriskie/react-disqus-thread.git",
+  "authors": [
+    "Matt Zabriskie"
+  ],
+  "description": "React Disqus thread component",
+  "main": "./dist/disqus-thread.js",
+  "keywords": [
+    "disqus",
+    "react",
+    "react-component"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "example",
+    "lib",
+    "node_modules",
+    "script",
+    "specs",
+    "index.js",
+    "karma.conf.js",
+    "webpack.config.js",
+    "package.json"
+  ]
+}
