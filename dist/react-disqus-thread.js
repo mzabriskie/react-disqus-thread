@@ -67,6 +67,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  'shortname', 'identifier', 'title', 'url', 'category_id'
 	];
 	
+	// Convert underscore to camelCase
+	function camelCase(str) {
+	  return str.replace(/(_.{1})/g, function (match) {
+	    return match[1].toUpperCase();
+	  });
+	}
+	
 	module.exports = React.createClass({
 	  displayName: 'DisqusThread',
 	
@@ -107,11 +114,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    url: React.PropTypes.string,
 	
 	    /**
-	     * `category_id` tells the Disqus service the category to be used for
+	     * `categoryId` tells the Disqus service the category to be used for
 	     * the current page. This is used when creating the thread on Disqus
 	     * for the first time.
 	     */
-	    category_id: React.PropTypes.string
+	    categoryId: React.PropTypes.string
 	  },
 	
 	  getDefaultProps: function () {
@@ -155,10 +162,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    // Prep Disqus configuration variables
 	    var disqusVars = DISQUS_CONFIG
 	      .filter(function (prop) {
-	        return !!this.props[prop];
+	        return !!this.props[camelCase(prop)];
 	      }, this)
 	      .map(function (prop) {
-	        return 'var disqus_' + prop + ' = \'' + this.props[prop].replace('\'', '\\\'') + '\';';
+	        return 'var disqus_' + prop + ' = \'' +
+	                this.props[camelCase(prop)].replace('\'', '\\\'') +
+	               '\';';
 	      }, this)
 	      .join('');
 	
