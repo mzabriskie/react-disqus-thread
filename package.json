@@ -1,6 +1,6 @@
 {
   "name": "react-disqus-thread",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "React Disqus thread component",
   "main": "index.js",
   "scripts": {
