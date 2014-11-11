@@ -151,7 +151,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	
 	  componentDidMount: function () {
-	    this.addDisqusScript();
+	    if (typeof DISQUS !== "undefined") {
+	      DISQUS.reset({reload: true});
+	    } else {
+	      this.addDisqusScript();
+	    }
 	  },
 	
 	  componentWillUnmount: function () {
@@ -181,6 +185,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    );
 	  }
 	});
+
 
 /***/ },
 /* 2 */
