@@ -28,10 +28,10 @@
   },
   "homepage": "https://github.com/mzabriskie/react-disqus-thread",
   "dependencies": {
-    "react": "^0.11.2"
+    "react": "^0.12.0"
   },
   "devDependencies": {
-    "jsx-loader": "^0.11.2",
+    "jsx-loader": "^0.12",
     "karma": "^0.12.24",
     "karma-cli": "0.0.4",
     "karma-jasmine": "^0.1.5",
