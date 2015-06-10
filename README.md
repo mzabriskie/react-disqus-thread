@@ -17,7 +17,6 @@ http://mzabriskie.github.io/react-disqus-thread/example
 ## Example
 
 ```js
-/** @jsx React.DOM */
 var React = require('react');
 var DisqusThread = require('react-disqus-thread');
 
@@ -34,7 +33,7 @@ var App = createClass({
 	}
 });
 
-React.renderComponent(<App/>, document.body);
+React.render(<App/>, document.getElementById('container'));
 ```
 
 ## License
