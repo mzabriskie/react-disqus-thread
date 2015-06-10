@@ -4,8 +4,9 @@
   "description": "React Disqus thread component",
   "main": "index.js",
   "scripts": {
-    "test": "script/test --browsers Firefox --single-run",
-    "start": "script/build"
+    "test": "scripts/test --browsers Firefox --single-run",
+    "build": "scripts/build",
+    "dev": "scripts/build-watch"
   },
   "browserify": {
     "transform": [
