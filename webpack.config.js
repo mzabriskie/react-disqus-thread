@@ -8,10 +8,5 @@ module.exports = {
   },
   externals: {
     'react': 'React'
-  },
-  module: {
-      loaders: [
-        {test: /\.js$/, loader: 'jsx-loader'}
-      ]
   }
 };
