@@ -10,3 +10,7 @@
 - Making React a peer dependency
 - Updating to React 0.13
 - Removing JSX
+
+### 0.2.1 (Jun 11, 2015)
+
+- Fixing issue with deprecated `transferPropsTo`

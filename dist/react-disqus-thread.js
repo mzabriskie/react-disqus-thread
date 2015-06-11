@@ -170,7 +170,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	
 	  render: function () {
-	    return this.transferPropsTo(
+	    return (
 	      DOM.div(this.props,
 	        DOM.div({id:"disqus_thread"}),
 	        DOM.noscript(null,
