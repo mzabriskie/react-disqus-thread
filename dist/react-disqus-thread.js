@@ -60,9 +60,8 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/** @jsx React.DOM */
-	
 	var React = __webpack_require__(2);
+	var DOM = React.DOM;
 	var DISQUS_CONFIG = [
 	  'shortname', 'identifier', 'title', 'url', 'category_id'
 	];
@@ -151,7 +150,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	
 	  componentDidMount: function () {
-	    this.addDisqusScript();
+	    DISQUS_CONFIG
+	      .filter(function (prop) {
+	        return !!this.props[camelCase(prop)];
+	      }, this)
+	      .forEach(function (prop) {
+	        window['disqus_' + prop] = this.props[camelCase(prop)];
+	      }, this);
+	
+	    if (typeof DISQUS !== "undefined") {
+	      DISQUS.reset({reload: true});
+	    } else {
+	      this.addDisqusScript();
+	    }
 	  },
 	
 	  componentWillUnmount: function () {
@@ -159,28 +170,31 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	
 	  render: function () {
-	    // Prep Disqus configuration variables
-	    var disqusVars = DISQUS_CONFIG
-	      .filter(function (prop) {
-	        return !!this.props[camelCase(prop)];
-	      }, this)
-	      .map(function (prop) {
-	        return 'var disqus_' + prop + ' = \'' +
-	                this.props[camelCase(prop)].replace('\'', '\\\'') +
-	               '\';';
-	      }, this)
-	      .join('');
-	
 	    return this.transferPropsTo(
-	      React.DOM.div(null, 
-	        React.DOM.div({id: "disqus_thread"}), 
-	        React.DOM.script({dangerouslySetInnerHTML: {__html: disqusVars}}), 
-	        React.DOM.noscript(null, "Please enable JavaScript to view the ", React.DOM.a({href: "http://disqus.com/?ref_noscript"}, "comments powered by Disqus.")), 
-	        React.DOM.a({href: "http://disqus.com", className: "dsq-brlink"}, "blog comments powered by ", React.DOM.span({className: "logo-disqus"}, "Disqus"))
+	      DOM.div(this.props,
+	        DOM.div({id:"disqus_thread"}),
+	        DOM.noscript(null,
+	          DOM.span(null,
+	            'Please enable JavaScript to view the ',
+	            DOM.a({href:"http://disqus.com/?ref_noscript"},
+	              'comments powered by Disqus.'
+	            )
+	          )
+	        ),
+	        DOM.a({
+	            href:"http://disqus.com",
+	            className:"dsq-brlink"
+	          },
+	          'blog comments powered by ',
+	          DOM.span({className:"logo-disqus"},
+	            'Disqus'
+	          )
+	        )
 	      )
 	    );
 	  }
 	});
+
 
 /***/ },
 /* 2 */
@@ -191,5 +205,5 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ }
 /******/ ])
 });
-
+;
 //# sourceMappingURL=react-disqus-thread.map
