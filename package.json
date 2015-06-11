@@ -31,6 +31,9 @@
   "dependencies": {
     "react": "^0.13.3"
   },
+  "peerDependencies": {
+    "react": "^0.13.3"
+  },
   "devDependencies": {
     "jsx-loader": "^0.13.2",
     "karma": "^0.12.36",
