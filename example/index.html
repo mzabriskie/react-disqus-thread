@@ -17,8 +17,9 @@
   </style>
 </head>
 <body>
-<script src="//fb.me/react-with-addons-0.11.2.js"></script>
-<script src="//fb.me/JSXTransformer-0.11.2.js"></script>
+<div id="container"></div>
+<script src="//fb.me/react-with-addons-0.13.3.js"></script>
+<script src="//fb.me/JSXTransformer-0.13.3.js"></script>
 <script src="../dist/react-disqus-thread.js"></script>
 <script type="text/jsx">
   /** @jsx React.DOM */
@@ -34,7 +35,7 @@
     }
   });
 
-  React.renderComponent(<App/>, document.body);
+  React.render(<App/>, document.getElementById('container'));
 </script>
 </body>
 </html>
