@@ -18,12 +18,12 @@ http://mzabriskie.github.io/react-disqus-thread/example
 
 ```js
 var React = require('react');
-var DisqusThread = require('react-disqus-thread');
+var ReactDisqusThread = require('react-disqus-thread');
 
 var App = createClass({
 	render: function () {
 		return (
-			<DisqusThread
+			<ReactDisqusThread
 				shortname="example"
 				identifier="something-unique-12345"
 				title="Example Thread"
