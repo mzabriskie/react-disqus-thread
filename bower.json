@@ -6,7 +6,7 @@
     "Matt Zabriskie"
   ],
   "description": "React Disqus thread component",
-  "main": "./dist/disqus-thread.js",
+  "main": "./dist/react-disqus-thread.js",
   "keywords": [
     "disqus",
     "react",
