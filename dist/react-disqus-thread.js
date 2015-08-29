@@ -66,12 +66,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  'shortname', 'identifier', 'title', 'url', 'category_id'
 	];
 	
-	// Convert underscore to camelCase
-	function camelCase(str) {
-	  return str.replace(/(_.{1})/g, function (match) {
-	    return match[1].toUpperCase();
-	  });
-	}
+	
+	var DISQUS_SCRIPT_ADDED = false;
+	
+	
 	
 	module.exports = React.createClass({
 	  displayName: 'DisqusThread',
@@ -113,11 +111,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    url: React.PropTypes.string,
 	
 	    /**
-	     * `categoryId` tells the Disqus service the category to be used for
+	     * `category_id` tells the Disqus service the category to be used for
 	     * the current page. This is used when creating the thread on Disqus
 	     * for the first time.
 	     */
-	    categoryId: React.PropTypes.string
+	    category_id: React.PropTypes.string
 	  },
 	
 	  getDefaultProps: function () {
@@ -131,7 +129,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	
 	  addDisqusScript: function () {
-	    var child = this.disqus = document.createElement('script');
+	    if (DISQUS_SCRIPT_ADDED) {
+	      return;
+	    }
+	
+	    DISQUS_SCRIPT_ADDED = true;
+	
+	    var child = document.createElement('script');
 	    var parent = document.getElementsByTagName('head')[0] ||
 	                 document.getElementsByTagName('body')[0];
 	
@@ -142,31 +146,49 @@ return /******/ (function(modules) { // webpackBootstrap
 	    parent.appendChild(child);
 	  },
 	
-	  removeDisqusScript: function () {
-	    if (this.disqus && this.disqus.parentNode) {
-	      this.disqus.parentNode.removeChild(this.disqus);
-	      this.disqus = null;
+	
+	  reloadDisqus: function() {
+	    var self = this;
+	
+	    var availableProps = {};
+	
+	    DISQUS_CONFIG.forEach(function(prop) {
+	      if (!!self.props[prop]) {
+	        availableProps[prop] = self.props[prop];
+	      }
+	    });
+	
+	    // always set URL
+	    if (!availableProps.url || !availableProps.url.length) {
+	      availableProps.url = window.location.href;
+	    }
+	
+	    Object.keys(availableProps).forEach(function(prop) {
+	      window['disqus_' + prop] = availableProps[prop];
+	    });
+	
+	    if (typeof DISQUS !== "undefined") {
+	      DISQUS.reset({ 
+	        reload: true,
+	        config: function() {
+	          _page = this.page;
+	
+	          Object.keys(availableProps).forEach(function(prop) {
+	            _page[prop] = availableProps[prop];
+	          });
+	        }
+	      });
+	    } else {
+	      self.addDisqusScript();
 	    }
 	  },
 	
 	  componentDidMount: function () {
-	    DISQUS_CONFIG
-	      .filter(function (prop) {
-	        return !!this.props[camelCase(prop)];
-	      }, this)
-	      .forEach(function (prop) {
-	        window['disqus_' + prop] = this.props[camelCase(prop)];
-	      }, this);
-	
-	    if (typeof DISQUS !== "undefined") {
-	      DISQUS.reset({reload: true});
-	    } else {
-	      this.addDisqusScript();
-	    }
+	    this.reloadDisqus();
 	  },
 	
-	  componentWillUnmount: function () {
-	    this.removeDisqusScript();
+	  componentDidUpdate: function () {
+	    this.reloadDisqus();
 	  },
 	
 	  render: function () {
@@ -198,7 +220,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 2 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	module.exports = __WEBPACK_EXTERNAL_MODULE_2__;
 
