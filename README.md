@@ -21,6 +21,11 @@ var React = require('react');
 var ReactDisqusThread = require('react-disqus-thread');
 
 var App = createClass({
+	
+	commentCallback: function(comment) {
+		console.log(comment.text);
+	}
+
 	render: function () {
 		return (
 			<ReactDisqusThread
@@ -28,7 +33,8 @@ var App = createClass({
 				identifier="something-unique-12345"
 				title="Example Thread"
 				url="http://www.example.com/example-thread"
-				categoryId="123456"/>
+				categoryId="123456"
+				onNewComment={this.commentCallback}/>
 		);
 	}
 });

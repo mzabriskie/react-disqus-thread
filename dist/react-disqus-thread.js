@@ -63,7 +63,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var React = __webpack_require__(2);
 	var DOM = React.DOM;
 	var DISQUS_CONFIG = [
-	  'shortname', 'identifier', 'title', 'url', 'category_id'
+	  'shortname', 'identifier', 'title', 'url', 'category_id', 'onNewComment'
 	];
 	
 	// Convert underscore to camelCase
@@ -117,7 +117,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * the current page. This is used when creating the thread on Disqus
 	     * for the first time.
 	     */
-	    categoryId: React.PropTypes.string
+	    categoryId: React.PropTypes.string,
+	
+	    /**
+	     * `onNewComment` function accepts one parameter `comment` which is a 
+	     * JavaScript object with comment `id` and `text`. This allows you to track
+	     * user comments and replies and run a script after a comment is posted.
+	     */
+	     onNewComment: React.PropTypes.func
 	  },
 	
 	  getDefaultProps: function () {
@@ -126,7 +133,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      identifier: null,
 	      title: null,
 	      url: null,
-	      category_id: null
+	      category_id: null,
+	      onNewComment: null
 	    };
 	  },
 	
@@ -150,6 +158,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	
 	  componentDidMount: function () {
+	    var self = this;
+	    if (this.props.onNewComment) {
+	      window['disqus_config'] = function() {
+	        this.callbacks.onNewComment = [
+	          function(comment) {
+	            self.props.onNewComment(comment);
+	          }
+	        ];
+	      }
+	    }
+	
 	    DISQUS_CONFIG
 	      .filter(function (prop) {
 	        return !!this.props[camelCase(prop)];
@@ -198,7 +217,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 2 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	module.exports = __WEBPACK_EXTERNAL_MODULE_2__;
 
