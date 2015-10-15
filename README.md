@@ -28,7 +28,7 @@ var App = createClass({
 				identifier="something-unique-12345"
 				title="Example Thread"
 				url="http://www.example.com/example-thread"
-				categoryId="123456"/>
+				category_id="123456"/>
 		);
 	}
 });
