@@ -25,11 +25,20 @@
   /** @jsx React.DOM */
   var DisqusThread = ReactDisqusThread;
   var App = React.createClass({
+    handleNewComment: function (comment) {
+      console.log(comment);
+    },
+
     render: function () {
       return (
         <div>
           <h1>React Disqus thread component</h1>
-          <DisqusThread shortname="mzabriskie" identifier="react-disqus-thread" title="React Disqus thread component"/>
+          <DisqusThread
+            shortname="mzabriskie"
+            identifier="react-disqus-thread"
+            title="React Disqus thread component"
+            onNewComment={this.handleNewComment}
+          />
         </div>
       );
     }
