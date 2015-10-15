@@ -21,6 +21,11 @@ var React = require('react');
 var ReactDisqusThread = require('react-disqus-thread');
 
 var App = createClass({
+	
+	handleNewComment: function(comment) {
+		console.log(comment.text);
+	}
+
 	render: function () {
 		return (
 			<ReactDisqusThread
@@ -29,6 +34,7 @@ var App = createClass({
 				title="Example Thread"
 				url="http://www.example.com/example-thread"
 				category_id="123456"/>
+				onNewComment={this.handleNewComment}/>
 		);
 	}
 });
