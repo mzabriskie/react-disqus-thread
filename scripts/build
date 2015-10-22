@@ -1,8 +1,0 @@
-#!/bin/bash -e
-node_modules/.bin/webpack --devtool source-map
-
-node_modules/.bin/uglifyjs dist/react-disqus-thread.js \
-  --output dist/react-disqus-thread.min.js \
-  --source-map dist/react-disqus-thread.min.map \
-  --source-map-url react-disqus-thread.min.map \
-  --compress warnings=false

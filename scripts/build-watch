@@ -1,2 +1,0 @@
-#!/bin/bash -e
-webpack --watch --devtool inline-source-map

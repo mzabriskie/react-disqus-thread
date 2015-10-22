@@ -1,7 +1,4 @@
 **/.*
-example
-script
-specs
+**/__tests__/
+examples/
 bower.json
-karma.conf.js
-webpack.config.js

@@ -2,16 +2,10 @@
   "name": "react-disqus-thread",
   "version": "0.2.2",
   "description": "React Disqus thread component",
-  "main": "index.js",
+  "main": "lib/main.js",
   "scripts": {
-    "test": "scripts/test --browsers Firefox --single-run",
-    "build": "scripts/build",
-    "dev": "scripts/build-watch"
-  },
-  "browserify": {
-    "transform": [
-      "reactify"
-    ]
+    "test": "rackt test --single-run --browsers Firefox",
+    "start": "rackt server"
   },
   "repository": {
     "type": "git",
@@ -29,20 +23,12 @@
   },
   "homepage": "https://github.com/mzabriskie/react-disqus-thread",
   "peerDependencies": {
-    "react": "^0.13.3"
+    "react": "^0.14.0",
+    "react-dom": "^0.14.0"
   },
   "devDependencies": {
-    "jsx-loader": "^0.13.2",
-    "karma": "^0.12.36",
-    "karma-chrome-launcher": "^0.1.12",
-    "karma-cli": "0.0.4",
-    "karma-firefox-launcher": "^0.1.6",
-    "karma-jasmine": "^0.3.5",
-    "karma-webpack": "^1.5.1",
-    "react": "^0.13.3",
-    "reactify": "^1.1.1",
-    "uglify-js": "^2.4.23",
-    "webpack": "^1.9.10",
-    "webpack-dev-server": "^1.9.0"
+    "rackt-cli": "^0.5.2",
+    "react": "^0.14.0",
+    "react-dom": "^0.14.0"
   }
 }
