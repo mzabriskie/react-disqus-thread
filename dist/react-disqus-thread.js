@@ -160,10 +160,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.loadDisqus();
 	  },
 	
-	  shouldComponentUpdate: function shouldComponentUpdate(newProps) {
-	    return newProps.id !== this.props.id || newProps.url !== this.props.url;
-	  },
-	
 	  componentDidUpdate: function componentDidUpdate() {
 	    this.loadDisqus();
 	  },
@@ -190,12 +186,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	      _react2['default'].createElement(
 	        'a',
 	        { href: 'http://disqus.com', className: 'dsq-brlink' },
-	        'blog comments powered by',
+	        'Blog comments powered by ',
 	        _react2['default'].createElement(
 	          'span',
 	          { className: 'logo-disqus' },
 	          'Disqus'
-	        )
+	        ),
+	        '.'
 	      )
 	    );
 	  },
