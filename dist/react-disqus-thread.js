@@ -132,6 +132,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	    category_id: _react2['default'].PropTypes.string,
 	
 	    /**
+	     * `remote_auth_s3` is the generated payload which authenticates users with Disqus.
+	     * Check https://help.disqus.com/customer/portal/articles/236206 for more.
+	     */
+	    remote_auth_s3: _react2['default'].PropTypes.string,
+	
+	    /**
+	     * `api_key` is the public key for your Disqus application.
+	     * Check https://help.disqus.com/customer/portal/articles/236206 for more.
+	     */
+	    api_key: _react2['default'].PropTypes.string,
+	
+	    /**
 	     * `onNewComment` function accepts one parameter `comment` which is a
 	     * JavaScript object with comment `id` and `text`. This allows you to track
 	     * user comments and replies and run a script after a comment is posted.
