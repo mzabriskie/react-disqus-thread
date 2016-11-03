@@ -1,10 +1,10 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("React"));
+		module.exports = factory(require("react"));
 	else if(typeof define === 'function' && define.amd)
-		define(["React"], factory);
+		define(["react"], factory);
 	else if(typeof exports === 'object')
-		exports["ReactDisqusThread"] = factory(require("React"));
+		exports["ReactDisqusThread"] = factory(require("react"));
 	else
 		root["ReactDisqusThread"] = factory(root["React"]);
 })(this, function(__WEBPACK_EXTERNAL_MODULE_2__) {
@@ -70,7 +70,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var DISQUS_CONFIG = ['shortname', 'identifier', 'title', 'url', 'category_id', 'onNewComment'];
+	var DISQUS_PROPS = ['shortname', 'identifier', 'title', 'url', 'category_id'];
+	var DISQUS_CONFIG_ONLY_PROPS = ['remote_auth_s3', 'api_key'];
+	var DISQUS_CALLBACKS = ['onNewComment'];
 	var __disqusAdded = false;
 	
 	function copyProps(context, props) {
@@ -79,14 +81,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  Object.keys(props).forEach(function (prop) {
 	    context[prefix + prop] = props[prop];
 	  });
-	
-	  if (typeof props.onNewComment === 'function') {
-	    context[prefix + 'config'] = function config() {
-	      this.callbacks.onNewComment = [function handleNewComment(comment) {
-	        props.onNewComment(comment);
-	      }];
-	    };
-	  }
 	}
 	
 	module.exports = _react2['default'].createClass({
@@ -136,6 +130,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * for the first time.
 	     */
 	    category_id: _react2['default'].PropTypes.string,
+	
+	    /**
+	     * `remote_auth_s3` is the generated payload which authenticates users with Disqus.
+	     * Check https://help.disqus.com/customer/portal/articles/236206 for more.
+	     */
+	    remote_auth_s3: _react2['default'].PropTypes.string,
+	
+	    /**
+	     * `api_key` is the public key for your Disqus application.
+	     * Check https://help.disqus.com/customer/portal/articles/236206 for more.
+	     */
+	    api_key: _react2['default'].PropTypes.string,
 	
 	    /**
 	     * `onNewComment` function accepts one parameter `comment` which is a
@@ -217,9 +223,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var _this = this;
 	
 	    var props = {};
-	
-	    // Extract Disqus props that were supplied to this component
-	    DISQUS_CONFIG.forEach(function (prop) {
+	    DISQUS_PROPS.forEach(function (prop) {
 	      if (!!_this.props[prop]) {
 	        props[prop] = _this.props[prop];
 	      }
@@ -228,7 +232,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	    // Always set URL
 	    if (!props.url || !props.url.length) {
 	      props.url = window.location.href;
+	
+	      // Disqus needs hashbang URL, see https://help.disqus.com/customer/portal/articles/472107
+	      props.url = props.url.replace(/#/, '') + '#!newthread';
 	    }
+	
+	    var configOnlyProps = {};
+	    DISQUS_CONFIG_ONLY_PROPS.forEach(function (prop) {
+	      if (!!_this.props[prop]) {
+	        configOnlyProps[prop] = _this.props[prop];
+	      }
+	    });
+	
+	    var callbacks = {};
+	    DISQUS_CALLBACKS.forEach(function (prop) {
+	      if (typeof _this.props[prop] === 'function') {
+	        callbacks[prop] = [_this.props[prop]];
+	      }
+	    });
 	
 	    // If Disqus has already been added, reset it
 	    if (typeof DISQUS !== 'undefined') {
@@ -236,14 +257,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	        reload: true,
 	        config: function config() {
 	          copyProps(this.page, props);
-	
-	          // Disqus needs hashbang URL, see https://help.disqus.com/customer/portal/articles/472107
-	          this.page.url = this.page.url.replace(/#/, '') + '#!newthread';
+	          copyProps(this.page, configOnlyProps);
+	          copyProps(this.callbacks, callbacks);
 	        }
 	      });
 	    } else {
 	      // Otherwise add Disqus to the page
 	      copyProps(window, props, 'disqus_');
+	      copyProps(window, {
+	        config: function config() {
+	          copyProps(this.page, configOnlyProps);
+	          copyProps(this.callbacks, callbacks);
+	        }
+	      }, 'disqus_');
 	      this.addDisqusScript();
 	    }
 	  }
